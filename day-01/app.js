@@ -3,58 +3,67 @@ import fs from "fs"
 
 const x = "dog"
 // const fs1 = require("fs")
-const readData = fs.readFileSync("input.txt", "utf8")
-const finalData = []
-const numberList = []
+const readData = fs.readFileSync("inputTestNums.txt", "utf8")
+const finalNumData = []
 // console.log(readData)
+
+let readWordData = fs.readFileSync("input.txt", "utf8")
+const finalNumWordData = []
+
 
 readData.split(/\n/).forEach((line) => {
     // console.log('line: ', line)
-    finalData.push(line)
+    finalNumData.push(line)
 })
 
-const arrayOfNums = []
 
-for(const line of finalData){
-    console.log(line)
-    const regexNums = /([0-9])/gi
-    const numsFound = [...line.matchAll(regexNums)]
-    let num1 = numsFound[0][0]
-    let num2 = numsFound[numsFound.length -1][0]
-    console.log(numsFound, num1, num2)
-    console.log(parseInt(num1 + num2))
-    arrayOfNums.push(parseInt(num1 + num2))
+function getNumbersFromText(inputTextArray){
+    const outputNumArray = []
+    for(const line of inputTextArray){
+        const regexNums = /([0-9])/gi
+        const numsFound = [...line.matchAll(regexNums)]
+        console.log(numsFound)
+        let num1 = numsFound[0][0]
+        let num2 = numsFound[numsFound.length - 1][0]
+        console.log(numsFound, num1, num2)
+        console.log(parseInt(num1 + num2))
+        outputNumArray.push(parseInt(num1 + num2))
+    }
+    return outputNumArray
 }
 
+const arrayOfNums = getNumbersFromText(finalNumData)
+
 const sum = arrayOfNums.reduce((partialSum, a) => partialSum + a, 0);
-console.log(sum)
+// console.log(`Answer for part 1: ${sum}`)
 
-// const demoRegex = /[0-9]/gi
-// const text = 'dog1cat'
-// let narp = [...text.matchAll(demoRegex)]
-// let narp2 = text.matchAll(demoRegex)
-// console.log(narp)
-// // // console.log(JSON.stringify(narp2))
-// // console.log(narp2.index)
-// for(let match of narp){
-//     console.log(match);
-// }
+// PART 2
+
+readWordData = readWordData.replaceAll(/one/g, 'one1one')
+readWordData = readWordData.replaceAll(/two/g, 'two2two')
+readWordData = readWordData.replaceAll(/three/g, 'three3three')
+readWordData = readWordData.replaceAll(/four/g, 'four4four')
+readWordData = readWordData.replaceAll(/five/g, 'five5five')
+readWordData = readWordData.replaceAll(/six/g, 'six6six')
+readWordData = readWordData.replaceAll(/seven/g, 'seven7seven')
+readWordData = readWordData.replaceAll(/eight/g, 'eight8eight')
+readWordData = readWordData.replaceAll(/nine/g, 'nine9nine')
+
+console.log(readWordData)
+// console.log(out)
 
 
-// // string definition
-// const sentence = "JavaScript1JavaScript2";
+readWordData.split(/\n/).forEach((line) => {
+    // console.log('line: ', line)
+    finalNumWordData.push(line)
+})
 
-// // a pattern having 'JavaScript' followed by a digit
-// const regex = /JavaScript\d/g;
+console.log(finalNumWordData)
 
-// // finding matches in the string for the given regular expression
-// let results = sentence.matchAll(regex);
+let output2 = getNumbersFromText(finalNumWordData)
 
-// // looping through the iterator
-// for (let result of results) {
-//   console.log(result);
-// }
+console.log(output2)
 
-// // Output:
-// // ["JavaScript1", index: 0, input: "JavaScript1JavaScript2", groups: undefined]
-// // ["JavaScript2", index: 11, input: "JavaScript1JavaScript2", groups: undefined]
+let finalVal2 = output2.reduce((partialSum, a) => partialSum + a, 0);
+
+console.log(`answer for part 2: ${finalVal2}`)
