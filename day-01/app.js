@@ -1,7 +1,6 @@
 "use strict"
 import fs from "fs"
 
-const x = "dog"
 // const fs1 = require("fs")
 const readData = fs.readFileSync("inputTestNums.txt", "utf8")
 const finalNumData = []
