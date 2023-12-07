@@ -23,6 +23,10 @@ for(let line of inputText1Array){
     groupObj['gameNumber'] = temp_[0][1]
     groupObj['sets'] = temp_[0][2].split(';')
     groupObj['isViableGame'] = true
+    groupObj['minRed'] = 0
+    groupObj['minBlue'] = 0
+    groupObj['minGreen'] = 0
+    groupObj['powersOfCubes'] = 0
     gameGroups.push(groupObj)
 }
 
@@ -49,6 +53,11 @@ for(let game of gameGroups){
         red = parseInt(red)
         blue = parseInt(blue)
         green = parseInt(green)
+        console.log(`${red}, ${blue}, ${green}`)
+        game['minRed'] = (red > game['minRed']) ? red : game['minRed']
+        game['minBlue'] = (blue > game['minBlue']) ? blue : game['minBlue']
+        game['minGreen'] = (green > game['minGreen']) ? green : game['minGreen']
+
         if (red > redLimit || blue > blueLimit || green > greenLimit){
             game['isViableGame'] = false
             console.log('NON VIABLE')
@@ -57,18 +66,28 @@ for(let game of gameGroups){
         //     game['isViableGame'] = true
         // }
     }
+    game['powersOfCubes'] = game['minRed'] * game['minBlue'] * game['minGreen']
+    console.log(game)
+    
 }
 
 let counter = 0
 
 for(let eachGame of gameGroups){
-    console.log(`game summary ${eachGame['gameNumber']}`)
-
-    console.log(eachGame['isViableGame'])
+    // console.log(`game summary ${eachGame['gameNumber']}`)
+    // console.log(eachGame)
+    // console.log(eachGame['isViableGame'])
     if(eachGame['isViableGame']){
         
         counter += parseInt(eachGame['gameNumber'])
     } 
         
 }
-console.log(`final tally: ${counter}`)
+console.log(`final tally of games that are valid: ${counter}`)
+
+let powerCounter = 0
+for(let eachGame of gameGroups){
+    console.log(eachGame)
+    powerCounter += eachGame[`powersOfCubes`]
+}
+console.log(`total powers: ${powerCounter}`)
