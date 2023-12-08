@@ -20,6 +20,7 @@ class Card {
         this.matches = this.compare(this.winningNumbers, this.numbersInHand)
         this.matchCount = this.matches.length
         this.points = this.computePoints(this.matchCount)
+        this.copies = 1
     }
 
     makeArray(input){
@@ -57,14 +58,14 @@ const reggy = /Card[\s]+(\d+): ([\d\s]+)\|([\s\d]+)/g
 
 
 for(let line of inputText1Array){
-    console.log(typeof(line))
-    console.log(line)
+    // console.log(typeof(line))
+    // console.log(line)
     const stuff = [...line.matchAll(reggy)]
     
     // console.log(stuff[0])
     // console.log(stuff[0][1])
     let hold = new Card(stuff[0][1], stuff[0][2], stuff[0][3])
-    console.log(hold)
+    // console.log(hold)
     cardArray.push(hold)
 }
 
@@ -72,4 +73,21 @@ let part1total = cardArray.reduce((acc, val) =>{
     return acc + val.points
 }, 0)
 
-console.log(part1total)
+// console.log(part1total)
+
+for(let [ind, card] of cardArray.entries()){
+    // console.log(ind)
+    console.log(card)
+    console.log(card.matchCount)
+    for(let addTo = 1; addTo < card.matchCount +1; addTo+=1 ){
+        let updateIndex = ind + addTo
+        console.log(updateIndex)
+        cardArray[updateIndex].copies += card.copies
+    }
+}
+
+let part2total = cardArray.reduce((acc, val) => {
+    return acc + val.copies
+}, 0)
+
+console.log(part2total)
